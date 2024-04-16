@@ -1,11 +1,11 @@
 import os
-import random
 from typing import Tuple, List
 
 import settings
 
 from .data_bases import Database
 from .parse_mixins import JPGParseMixin
+import secrets
 
 
 class OmniglotDatabase(JPGParseMixin, Database):
@@ -39,7 +39,7 @@ class OmniglotDatabase(JPGParseMixin, Database):
         num_train_classes = self.num_train_classes
         num_val_classes = self.num_val_classes
 
-        random.shuffle(characters)
+        secrets.SystemRandom().shuffle(characters)
         train_chars = characters[:num_train_classes]
         val_chars = characters[num_train_classes:num_train_classes + num_val_classes]
         test_chars = characters[num_train_classes + num_val_classes:]
