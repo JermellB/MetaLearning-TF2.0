@@ -11,6 +11,7 @@ from models.maml.maml import ModelAgnosticMetaLearningModel
 from networks.maml_umtra_networks import SimpleModel, MiniImagenetModel
 from networks.sml_feature_networks import SimpleModelFeature
 from databases import OmniglotDatabase, MiniImagenetDatabase
+import fickling
 
 
 class SML(ModelAgnosticMetaLearningModel):
@@ -188,7 +189,7 @@ class SML(ModelAgnosticMetaLearningModel):
                 f'k_means_{self.n_clusters}.pkl'
             )
             if os.path.exists(k_means_path):
-                k_means = pickle.load(open(k_means_path, 'rb'))
+                k_means = fickling.load(open(k_means_path, 'rb'))
                 cluster_ids = k_means.predict(features)
             else:
                 pca = PCA(n_components=256, whiten=True)
