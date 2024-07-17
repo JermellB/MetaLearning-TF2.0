@@ -1,11 +1,11 @@
 import os
 from datetime import datetime
 from abc import ABC, abstractmethod
-import random
 from typing import Tuple, Callable, Dict
 
 import tensorflow as tf
 import numpy as np
+import secrets
 
 
 class Database(ABC):
@@ -24,7 +24,7 @@ class Database(ABC):
         self.input_shape = input_shape
 
         if random_seed != -1:
-            random.seed(random_seed)
+            secrets.SystemRandom().seed(random_seed)
 
         self.train_folders, self.val_folders, self.test_folders = self.get_train_val_test_folders()
 
@@ -33,7 +33,7 @@ class Database(ABC):
         self.test_folders = self.convert_to_dict(self.test_folders)
 
         if random_seed != -1:
-            random.seed(None)
+            secrets.SystemRandom().seed(None)
 
     def convert_to_dict(self, folders):
         if type(folders) == list:
