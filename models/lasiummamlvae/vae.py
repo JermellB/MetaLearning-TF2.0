@@ -1,5 +1,4 @@
 import os
-import random
 
 import numpy as np
 import tensorflow as tf
@@ -10,6 +9,7 @@ import settings
 from databases import OmniglotDatabase
 
 import matplotlib.pyplot as plt
+import secrets
 
 
 class CheckPointFreq(tf.keras.callbacks.ModelCheckpoint):
@@ -171,7 +171,7 @@ class VAE(keras.Model):
 
     def get_dataset(self, partition='train'):
         instances = self.database.get_all_instances(partition_name=partition)
-        random.shuffle(instances)
+        secrets.SystemRandom().shuffle(instances)
         train_dataset = tf.data.Dataset.from_tensor_slices(instances).shuffle(len(instances))
         train_dataset = train_dataset.map(self.parser.get_parse_fn())
         train_dataset = train_dataset.batch(128)

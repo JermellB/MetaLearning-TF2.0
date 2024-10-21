@@ -1,10 +1,10 @@
-import random
 
 import tensorflow as tf
 import tensorflow_addons as tfa
 import numpy as np
 
 from models.maml.maml import ModelAgnosticMetaLearningModel
+import secrets
 
 
 class MAML_VAE(ModelAgnosticMetaLearningModel):
@@ -144,7 +144,7 @@ class MAML_VAE(ModelAgnosticMetaLearningModel):
             return tf.py_function(f, inp=[instances], Tout=[tf.float32, tf.float32])
 
         instances = self.database.get_all_instances(partition_name='train')
-        random.shuffle(instances)
+        secrets.SystemRandom().shuffle(instances)
 
         dataset = tf.data.Dataset.from_tensor_slices(instances)
         dataset = dataset.map(self.get_parse_function())
