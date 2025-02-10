@@ -141,8 +141,8 @@ class CelebADatabase(Database):
         train_val_test_partition = self.get_train_val_test_partition()
         identities = self.get_identities()
         with open(os.path.join(settings.CELEBA_RAW_DATA_ADDRESS, 'list_attr_celeba.txt')) as attributes_file:
-            num_lines = int(attributes_file.readline())
-            attributes = attributes_file.readline().split()
+            num_lines = int(attributes_file.readline(5_000_000))
+            attributes = attributes_file.readline(5_000_000).split()
             attributes.sort()
 
             attributes_positive_sets = list()
@@ -153,7 +153,7 @@ class CelebADatabase(Database):
                 attributes_negative_sets.append(set())
 
             for _ in range(num_lines):
-                line_data = attributes_file.readline().split()
+                line_data = attributes_file.readline(5_000_000).split()
                 example_name = line_data[0]
 
                 if train_val_test_partition[example_name] != partition:
