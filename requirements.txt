@@ -12,3 +12,4 @@ matplotlib
 seaborn
 # for face recognition
 # face_recognition
+fickling>=0.1.3,~=0.1.0
