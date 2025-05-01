@@ -1,4 +1,3 @@
-import random
 
 import tensorflow as tf
 import tensorflow_hub as hub
@@ -6,6 +5,7 @@ import tensorflow_addons as tfa
 import numpy as np
 
 from models.maml.maml import ModelAgnosticMetaLearningModel
+import secrets
 
 
 class MAMLUMTRA(ModelAgnosticMetaLearningModel):
@@ -107,7 +107,7 @@ class MAMLUMTRA(ModelAgnosticMetaLearningModel):
             )
 
         instances = self.database.get_all_instances(partition_name='train')
-        random.shuffle(instances)
+        secrets.SystemRandom().shuffle(instances)
 
         dataset = tf.data.Dataset.from_tensor_slices(instances)
         dataset = dataset.map(self.get_parse_function())
